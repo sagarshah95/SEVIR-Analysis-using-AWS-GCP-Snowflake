@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block title %}All SEVIR Files in your S3 Bucket List{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="col-12-xs">
+      <h3>Bucket List</h3>
+
+      <table class="table table-striped">
+        <tr>
+          <th>All Available S3 Buckets in SEVIR Account</th>
+          <th>Created</th>
+          <th></th>
+        </tr>
+
+        {% for bucket in buckets %}
+        <tr>
+          <td>{{ bucket['Name'] }}</td>
+          <td>{{ bucket['CreationDate'] | datetimeformat }}</td>
+          <td>
+            <form class="select-bucket" action="{{ url_for('index') }}" method="post">
+              <input type="hidden" name="bucket" value="{{ bucket['Name'] }}">
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fa fa-archive"></i>
+                Select
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endblock %}
